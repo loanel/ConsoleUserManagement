@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotEquals;
         "com.data.test.ConsoleUserManagement.service",
         "com.data.test.ConsoleUserManagement.repository",
 })
-public class ConsoleControllerTests {
+public class ConsoleControllerTest {
 
     @Autowired
     ConsoleController consoleController;
@@ -35,48 +35,47 @@ public class ConsoleControllerTests {
     UserRepository userRepository;
 
     @Test
-    public void addUserToDatabase(){
+    public void addUserToDatabase() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
 
         ///when
-        consoleController.addUserToDatabase(userDto);
+        consoleController.createNewUser(userDto);
 
         ///then
         userRepository.existsByUsername("testUsername");
     }
 
     @Test
-    public void passwordEncryptionTest(){
+    public void passwordEncryptionTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
 
         ///when
-        consoleController.addUserToDatabase(userDto);
+        consoleController.createNewUser(userDto);
 
         ///then
         assertNotEquals(userRepository.findByUsername("testUsername").getPassword(), userDto.getPassword());
     }
 
     @Test
-    public void changeUserEmail(){
+    public void changeUserEmail() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
-        consoleController.addUserToDatabase(userDto);
+        consoleController.createNewUser(userDto);
 
         ///when
         consoleController.updateEmail("testUsername", "newMail@test.com");
 
         ///then
-
         assertEquals(userRepository.findByUsername("testUsername").getEmail(), "newMail@test.com");
     }
 
     @Test
-    public void changeUserTelephone(){
+    public void changeUserTelephone() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
-        consoleController.addUserToDatabase(userDto);
+        consoleController.createNewUser(userDto);
 
         ///when
         consoleController.updateTelephoneNumber("testUsername", "987654321");

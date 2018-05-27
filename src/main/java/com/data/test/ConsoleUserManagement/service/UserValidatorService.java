@@ -1,6 +1,8 @@
 package com.data.test.ConsoleUserManagement.service;
 
 import com.data.test.ConsoleUserManagement.dto.UserDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 @Service
 public class UserValidatorService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserValidatorService.class.getName());
     private static Validator validator;
 
     public UserValidatorService() {
@@ -23,7 +25,7 @@ public class UserValidatorService {
         Set<ConstraintViolation<UserDto>> constraintViolations = validator.validate(userDto);
         if (!constraintViolations.isEmpty()) {
             for (ConstraintViolation constraintViolation : constraintViolations) {
-                System.out.println(constraintViolation.getMessage());
+                logger.info(constraintViolation.getMessage());
             }
             return false;
         } else {
