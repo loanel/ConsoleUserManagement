@@ -1,5 +1,6 @@
-package com.data.test.ConsoleUserManagement;
+package com.data.test.ConsoleUserManagement.controller;
 
+import com.data.test.ConsoleUserManagement.ConsoleUserManagementApplicationTest;
 import com.data.test.ConsoleUserManagement.controller.ConsoleController;
 import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
 import com.data.test.ConsoleUserManagement.dto.UserDto;
