@@ -28,17 +28,16 @@ public class ConsoleController {
     }
 
 
-    public void createNewUser(UserDto user) {
+    public void createNewUser(UserDto userDto) {
         try {
-            if (!checkUserConstraints(user)) {
-                throw new WrongUserInformationException("Failed to login, wrong user information provided");
-            }
-            consoleService.addUserToDatabase(user);
+            checkUserConstraints(userDto);
+            consoleService.addUserToDatabase(userDto);
 
         } catch (WrongUserInformationException | UserAlreadyExistsException e) {
             logger.info(e.getMessage());
         }
     }
+
 
     public Boolean loginUser(LoginCredentials loginCredentials) {
         try {
@@ -50,15 +49,33 @@ public class ConsoleController {
         return false;
     }
 
-    private Boolean checkUserConstraints(UserDto userDto) {
-        return userValidator.validateUser(userDto);
+    private void checkUserConstraints(UserDto userDto) throws WrongUserInformationException {
+        userValidator.validateUser(userDto);
     }
 
     public void updateEmail(String username, String email) {
-        consoleService.updateUserEmail(username, email);
+        try {
+            checkNewEmailConstraints(email);
+            consoleService.updateUserEmail(username, email);
+        } catch (WrongUserInformationException e) {
+            logger.info(e.getMessage());
+        }
+    }
+
+    private void checkNewEmailConstraints(String email) throws WrongUserInformationException {
+        userValidator.validateNewEmail(email);
     }
 
     public void updateTelephoneNumber(String username, String telephoneNumber) {
-        consoleService.updateUserTelephoneNumber(username, telephoneNumber);
+        try {
+            checkNewTelephoneNumberConstraints(telephoneNumber);
+            consoleService.updateUserTelephoneNumber(username, telephoneNumber);
+        } catch (WrongUserInformationException e) {
+            logger.info(e.getMessage());
+        }
+    }
+
+    private void checkNewTelephoneNumberConstraints(String telephoneNumber) throws WrongUserInformationException {
+        userValidator.validateNewTelephoneNumber(telephoneNumber);
     }
 }

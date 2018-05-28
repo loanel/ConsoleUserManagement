@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 @SpringBootApplication
+@Profile("!test")
 public class ConsoleUserManagementApplication implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsoleUserManagementApplication.class.getName());

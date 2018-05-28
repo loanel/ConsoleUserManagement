@@ -19,11 +19,11 @@ public class User {
 
     }
 
-    public User(String username, String password, String telephoneNumber, String email) {
+    public User(String username, String password, String email, String telephoneNumber) {
         this.username = username;
         this.password = password;
-        this.telephoneNumber = telephoneNumber;
         this.email = email;
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getUsername() {
