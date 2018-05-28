@@ -4,7 +4,6 @@ import com.data.test.ConsoleUserManagement.dto.LoginCredentials;
 import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
 import com.data.test.ConsoleUserManagement.dto.UserDto;
 import com.data.test.ConsoleUserManagement.service.PasswordGenerator;
-import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
