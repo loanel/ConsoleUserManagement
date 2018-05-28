@@ -2,21 +2,19 @@ package com.data.test.ConsoleUserManagement.repository;
 
 import com.data.test.ConsoleUserManagement.ConsoleUserManagementApplicationTest;
 import com.data.test.ConsoleUserManagement.model.User;
-import com.data.test.ConsoleUserManagement.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -32,9 +30,9 @@ public class UserRepositoryTest {
 
 
     @Test
-    public void checkUserExistsByUsername(){
+    public void checkUserExistsByUsername() {
         ///given
-        User user = new User("testUser", "testpass", "123456789", "testMail@gmail.com");
+        User user = new User("testUser", "testpass", "testMail@gmail.com", "123456789");
         entityManager.persist(user);
         entityManager.flush();
 
@@ -46,9 +44,18 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findUserByUsername(){
+    public void checkUserDoesNotExist() {
+        ///when
+        Boolean userExists = userRepository.existsByUsername("nonExistingUser");
+
+        ///then
+        assertFalse(userExists);
+    }
+
+    @Test
+    public void findUserByUsername() {
         ///given
-        User user = new User("testUser", "testpass", "123456789", "testMail@gmail.com");
+        User user = new User("testUser", "testpass", "testMail@gmail.com", "123456789");
         entityManager.persist(user);
         entityManager.flush();
 
@@ -57,5 +64,39 @@ public class UserRepositoryTest {
 
         ///then
         assertThat(foundUser.getUsername()).isEqualTo(user.getUsername());
+    }
+
+    @Test
+    public void findNonExistingByUsername() {
+        ///when
+        User foundUser = userRepository.findByUsername("nonExistingUser");
+
+        ///then
+        assertNull(foundUser);
+    }
+
+    @Test
+    public void saveMethodTest() {
+        ///given
+        User user = new User("testUser", "testpass", "testMail@gmail.com", "123456789");
+
+        ///when
+        userRepository.save(user);
+
+        ///then
+        assertTrue(userRepository.existsByUsername("testUser"));
+    }
+
+    @Test
+    public void deleteMethodTest() {
+        ///given
+        User user = new User("testUser", "testpass", "testMail@gmail.com", "123456789");
+        userRepository.save(user);
+
+        ///then
+        userRepository.delete(user);
+
+        ///then
+        assertFalse(userRepository.existsByUsername("testUser"));
     }
 }

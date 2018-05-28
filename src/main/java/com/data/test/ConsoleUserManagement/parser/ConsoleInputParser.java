@@ -3,10 +3,14 @@ package com.data.test.ConsoleUserManagement.parser;
 import com.data.test.ConsoleUserManagement.dto.LoginCredentials;
 import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
 import com.data.test.ConsoleUserManagement.dto.UserDto;
+import com.data.test.ConsoleUserManagement.service.PasswordGenerator;
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +19,10 @@ import java.util.regex.Pattern;
 public class ConsoleInputParser {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsoleInputParser.class.getName());
-    private Scanner scanner;
+    private final Scanner scanner;
+
+    @Autowired
+    PasswordGenerator passwordGenerator;
 
     public ConsoleInputParser() {
         this.scanner = new Scanner(System.in);
@@ -57,14 +64,9 @@ public class ConsoleInputParser {
     }
 
     private char[] generatePassword() {
-        String LOWER = "abcdefghijklmnopqrstuvwxyz";
-        String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String DIGITS = "0123456789";
-        String PUNCTUATION = "!.?@#$%^&+=";
-
-        ///temporary
-        logger.info("Your password is AaBc!?23Kjl");
-        return "AaBc!?23Kjl".toCharArray();
+        char[] generatedPassword = passwordGenerator.generatePassword();
+        logger.info("Your generated password is: " + String.valueOf(generatedPassword) + " , in characters -> " + Arrays.toString(generatedPassword));
+        return generatedPassword;
     }
 
     public LoginCredentials getLoginCredentials() {

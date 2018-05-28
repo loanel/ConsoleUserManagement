@@ -16,8 +16,8 @@ public class UserDto {
     @Pattern.List({
             @Pattern(regexp = "(?=.*[a-z]).+", message = "No small character in password"),
             @Pattern(regexp = "(?=.*[A-Z]).+", message = "No large character in password"),
+            @Pattern(regexp = "(?=.*[0-9]).+", message = "No number in password"),
             @Pattern(regexp = "(?=.*[!.?@#$%^&+=]).+", message = "No special character in password"),
-            @Pattern(regexp = "(?=.*[0-9]).+", message = "No number in password")
     })
     private final PasswordHolder password;
 
