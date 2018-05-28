@@ -30,10 +30,10 @@ import static org.junit.Assert.assertTrue;
         "com.data.test.ConsoleUserManagement.service",
         "com.data.test.ConsoleUserManagement.repository",
 })
-public class ConsoleServiceTest {
+public class UserServiceTest {
 
     @Autowired
-    ConsoleService consoleService;
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
@@ -47,7 +47,7 @@ public class ConsoleServiceTest {
         UserDto userDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@gmail.com", "123456789");
 
         ///when
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///then
         assertTrue(userRepository.existsByUsername("testUser"));
@@ -60,11 +60,11 @@ public class ConsoleServiceTest {
         UserDto duplicateUserDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "123456789", "testMail@gmail.com");
 
         ///when
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///then
         exception.expect(UserAlreadyExistsException.class);
-        consoleService.addUserToDatabase(duplicateUserDto);
+        userService.addUserToDatabase(duplicateUserDto);
     }
 
     @Test
@@ -72,10 +72,10 @@ public class ConsoleServiceTest {
         ///given
         UserDto userDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@gmail.com", "123456789");
         LoginCredentials loginCredentials = new LoginCredentials("testUser", new PasswordHolder("testpas!AA1".toCharArray()));
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///then
-        consoleService.checkLoginCredentials(loginCredentials);
+        userService.checkLoginCredentials(loginCredentials);
     }
 
     @Test
@@ -83,12 +83,12 @@ public class ConsoleServiceTest {
         ///given
         UserDto userDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@gmail.com", "123456789");
         LoginCredentials loginCredentials = new LoginCredentials("testWrongUsername", new PasswordHolder("testpas!AA1".toCharArray()));
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///then
         exception.expect(WrongLoginCredentialsException.class);
         exception.expectMessage("Wrong username provided, try again");
-        consoleService.checkLoginCredentials(loginCredentials);
+        userService.checkLoginCredentials(loginCredentials);
     }
 
     @Test
@@ -96,22 +96,22 @@ public class ConsoleServiceTest {
         ///given
         UserDto userDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@gmail.com", "123456789");
         LoginCredentials loginCredentials = new LoginCredentials("testUser", new PasswordHolder("wrongPassword".toCharArray()));
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///then
         exception.expect(WrongLoginCredentialsException.class);
         exception.expectMessage("Wrong password provided, try again");
-        consoleService.checkLoginCredentials(loginCredentials);
+        userService.checkLoginCredentials(loginCredentials);
     }
 
     @Test
     public void updateUserEmailTest() throws UserAlreadyExistsException {
         ///given
         UserDto userDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@gmail.com", "123456789");
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///when
-        consoleService.updateUserEmail("testUser", "newTestMail@gmail.com");
+        userService.updateUserEmail("testUser", "newTestMail@gmail.com");
 
         ///then
         assertEquals("newTestMail@gmail.com", userRepository.findByUsername("testUser").getEmail());
@@ -121,10 +121,10 @@ public class ConsoleServiceTest {
     public void updateUserTelephoneNumberTest() throws UserAlreadyExistsException {
         ///given
         UserDto userDto = new UserDto("testUser", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@gmail.com", "123456789");
-        consoleService.addUserToDatabase(userDto);
+        userService.addUserToDatabase(userDto);
 
         ///when
-        consoleService.updateUserTelephoneNumber("testUser", "987654321");
+        userService.updateUserTelephoneNumber("testUser", "987654321");
 
         ///then
         assertEquals("987654321", userRepository.findByUsername("testUser").getTelephoneNumber());

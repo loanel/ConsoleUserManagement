@@ -1,6 +1,7 @@
 package com.data.test.ConsoleUserManagement.dto;
 
 public class PasswordHolder implements CharSequence {
+    ///holding password as char to prevent leaks during memory dumps and accidental password prints
     private char[] passwordContainer;
 
     public PasswordHolder(char[] passwordContainer) {

@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 @Service
 public class UserValidatorService {
     private static final Logger logger = LoggerFactory.getLogger(UserValidatorService.class.getName());
+
     private static Validator validator;
 
     public UserValidatorService() {

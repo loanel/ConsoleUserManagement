@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 
 @Component
 public class ConsoleInputParser {
-
     private static final Logger logger = LoggerFactory.getLogger(ConsoleInputParser.class.getName());
+
     private final Scanner scanner;
 
     @Autowired

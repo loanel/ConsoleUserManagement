@@ -1,24 +1,23 @@
 package com.data.test.ConsoleUserManagement.command;
 
-import com.data.test.ConsoleUserManagement.controller.ConsoleController;
+import com.data.test.ConsoleUserManagement.controller.UserController;
 import com.data.test.ConsoleUserManagement.parser.ConsoleInputParser;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChangeTelephoneNumberCommand implements LoggedInCommand {
-
     private final ConsoleInputParser consoleInputParser;
 
-    private final ConsoleController consoleController;
+    private final UserController userController;
 
-    public ChangeTelephoneNumberCommand(ConsoleInputParser consoleInputParser, ConsoleController consoleController) {
+    public ChangeTelephoneNumberCommand(ConsoleInputParser consoleInputParser, UserController userController) {
         this.consoleInputParser = consoleInputParser;
-        this.consoleController = consoleController;
+        this.userController = userController;
     }
 
     @Override
     public void execute(String username) {
         String telephoneNumber = consoleInputParser.getNewTelephoneNumber();
-        consoleController.updateTelephoneNumber(username, telephoneNumber);
+        userController.updateTelephoneNumber(username, telephoneNumber);
     }
 }

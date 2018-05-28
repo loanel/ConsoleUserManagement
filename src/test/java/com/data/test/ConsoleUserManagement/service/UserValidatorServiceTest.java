@@ -1,36 +1,33 @@
 package com.data.test.ConsoleUserManagement.service;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.read.ListAppender;
 import com.data.test.ConsoleUserManagement.ConsoleUserManagementApplicationTest;
 import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
 import com.data.test.ConsoleUserManagement.dto.UserDto;
 import com.data.test.ConsoleUserManagement.exception.WrongUserInformationException;
-import org.apache.logging.log4j.spi.LoggerContext;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static junit.framework.TestCase.assertFalse;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(value = "test")
 @SpringBootTest(classes = ConsoleUserManagementApplicationTest.class)
+@ComponentScan(basePackages = {
+        "com.data.test.ConsoleUserManagement.controller",
+        "com.data.test.ConsoleUserManagement.service",
+        "com.data.test.ConsoleUserManagement.repository",
+})
 public class UserValidatorServiceTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -39,7 +36,7 @@ public class UserValidatorServiceTest {
     private UserValidatorService userValidatorService;
 
     @Before
-    public void setupStreams(){
+    public void setupStreams() {
         System.setOut(new PrintStream(outContent));
     }
 
@@ -95,7 +92,7 @@ public class UserValidatorServiceTest {
         userValidatorService.validateUser(userDto);
 
         ///then
-        assertThat(outContent.toString().contains( "Password is too short, minimum 8 characters required"));
+        assertThat(outContent.toString().contains("Password is too short, minimum 8 characters required"));
     }
 
     @Test
