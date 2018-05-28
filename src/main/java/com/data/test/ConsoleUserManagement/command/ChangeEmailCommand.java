@@ -1,6 +1,6 @@
 package com.data.test.ConsoleUserManagement.command;
 
-import com.data.test.ConsoleUserManagement.controller.ConsoleController;
+import com.data.test.ConsoleUserManagement.controller.UserController;
 import com.data.test.ConsoleUserManagement.parser.ConsoleInputParser;
 import org.springframework.stereotype.Component;
 
@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 public class ChangeEmailCommand implements LoggedInCommand {
 
     private final ConsoleInputParser consoleInputParser;
-    private final ConsoleController consoleController;
+    private final UserController userController;
 
-    public ChangeEmailCommand(ConsoleInputParser consoleInputParser, ConsoleController consoleController) {
+    public ChangeEmailCommand(ConsoleInputParser consoleInputParser, UserController userController) {
         this.consoleInputParser = consoleInputParser;
-        this.consoleController = consoleController;
+        this.userController = userController;
     }
 
     @Override
     public void execute(String username) {
         String email = consoleInputParser.getNewUserEmail();
-        consoleController.updateEmail(username, email);
+        userController.updateEmail(username, email);
     }
 }

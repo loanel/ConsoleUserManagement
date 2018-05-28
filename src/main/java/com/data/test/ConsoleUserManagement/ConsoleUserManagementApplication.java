@@ -3,7 +3,7 @@ package com.data.test.ConsoleUserManagement;
 import com.data.test.ConsoleUserManagement.command.Command;
 import com.data.test.ConsoleUserManagement.command.LoginCommand;
 import com.data.test.ConsoleUserManagement.command.RegisterCommand;
-import com.data.test.ConsoleUserManagement.controller.ConsoleController;
+import com.data.test.ConsoleUserManagement.controller.UserController;
 import com.data.test.ConsoleUserManagement.parser.ConsoleInputParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +23,14 @@ import java.util.Scanner;
 @SpringBootApplication
 @Profile("!test")
 public class ConsoleUserManagementApplication implements CommandLineRunner {
-
     private static final Logger logger = LoggerFactory.getLogger(ConsoleUserManagementApplication.class.getName());
+
+    private static final String STOP_APP_SIGN = "3";
     private Map<String, Command> commands;
     @Autowired
     private ConsoleInputParser consoleInputParser;
     @Autowired
-    private ConsoleController consoleController;
+    private UserController userController;
 
 
     @Bean
@@ -52,7 +53,7 @@ public class ConsoleUserManagementApplication implements CommandLineRunner {
             logger.info("Available options: 1) register new user, 2) login to existing user, 3) quit");
 
             String input = scanner.next();
-            if (input.equals("3")) {
+            if (input.equals(STOP_APP_SIGN)) {
                 break;
             }
 
@@ -67,7 +68,7 @@ public class ConsoleUserManagementApplication implements CommandLineRunner {
 
     private void createCommandMap() {
         this.commands = new HashMap<>();
-        commands.put("1", new RegisterCommand(consoleInputParser, consoleController));
-        commands.put("2", new LoginCommand(consoleInputParser, consoleController));
+        commands.put("1", new RegisterCommand(consoleInputParser, userController));
+        commands.put("2", new LoginCommand(consoleInputParser, userController));
     }
 }

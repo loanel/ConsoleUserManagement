@@ -1,11 +1,9 @@
 package com.data.test.ConsoleUserManagement.controller;
 
 import com.data.test.ConsoleUserManagement.ConsoleUserManagementApplicationTest;
-import com.data.test.ConsoleUserManagement.controller.ConsoleController;
 import com.data.test.ConsoleUserManagement.dto.LoginCredentials;
 import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
 import com.data.test.ConsoleUserManagement.dto.UserDto;
-import com.data.test.ConsoleUserManagement.exception.WrongUserInformationException;
 import com.data.test.ConsoleUserManagement.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,10 +35,10 @@ import static org.junit.Assert.assertNotEquals;
         "com.data.test.ConsoleUserManagement.service",
         "com.data.test.ConsoleUserManagement.repository",
 })
-public class ConsoleControllerTest {
+public class UserControllerTest {
 
     @Autowired
-    ConsoleController consoleController;
+    UserController userController;
 
     @Autowired
     UserRepository userRepository;
@@ -51,7 +49,7 @@ public class ConsoleControllerTest {
     public final ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setupStreams(){
+    public void setupStreams() {
         System.setOut(new PrintStream(outContent));
     }
 
@@ -61,19 +59,19 @@ public class ConsoleControllerTest {
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
 
         ///when
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///then
         userRepository.existsByUsername("testUsername");
     }
 
     @Test
-    public void createNewUserValidationFailTest(){
+    public void createNewUserValidationFailTest() {
         ///given
         UserDto userDto = new UserDto("aa", new PasswordHolder("aa".toCharArray()), "taa", "aa");
 
         ///when
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///then
         //ValidatorService threw an exception, caught here
@@ -82,28 +80,28 @@ public class ConsoleControllerTest {
     }
 
     @Test
-    public void loginUserTest(){
+    public void loginUserTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
         LoginCredentials loginCredentials = new LoginCredentials("testUsername", new PasswordHolder("testpas!AA1".toCharArray()));
 
         ///when
-        consoleController.createNewUser(userDto);
-        Boolean loginPassed = consoleController.loginUser(loginCredentials);
+        userController.createNewUser(userDto);
+        Boolean loginPassed = userController.loginUser(loginCredentials);
         ///then
 
         assertTrue(loginPassed);
     }
 
     @Test
-    public void loginUserWrongUsernameTest(){
+    public void loginUserWrongUsernameTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
         LoginCredentials loginCredentials = new LoginCredentials("wrongTestUsername", new PasswordHolder("testpas!AA1".toCharArray()));
 
         ///when
-        consoleController.createNewUser(userDto);
-        Boolean loginPassed = consoleController.loginUser(loginCredentials);
+        userController.createNewUser(userDto);
+        Boolean loginPassed = userController.loginUser(loginCredentials);
         ///then
 
         assertFalse(loginPassed);
@@ -111,20 +109,19 @@ public class ConsoleControllerTest {
     }
 
     @Test
-    public void loginUserWrongPasswordTest(){
+    public void loginUserWrongPasswordTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
         LoginCredentials loginCredentials = new LoginCredentials("testUsername", new PasswordHolder("aaaaaaA!!a1".toCharArray()));
 
         ///when
-        consoleController.createNewUser(userDto);
-        Boolean loginPassed = consoleController.loginUser(loginCredentials);
+        userController.createNewUser(userDto);
+        Boolean loginPassed = userController.loginUser(loginCredentials);
         ///then
 
         assertFalse(loginPassed);
         assertTrue(outContent.toString().contains("Wrong password provided, try again"));
     }
-
 
 
     @Test
@@ -133,7 +130,7 @@ public class ConsoleControllerTest {
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
 
         ///when
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///then
         assertNotEquals(userRepository.findByUsername("testUsername").getPassword(), userDto.getPassword());
@@ -143,23 +140,23 @@ public class ConsoleControllerTest {
     public void updateEmailTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///when
-        consoleController.updateEmail("testUsername", "newMail@test.com");
+        userController.updateEmail("testUsername", "newMail@test.com");
 
         ///then
         assertEquals(userRepository.findByUsername("testUsername").getEmail(), "newMail@test.com");
     }
 
     @Test
-    public void updateEmailWrongFormTest(){
+    public void updateEmailWrongFormTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///when
-        consoleController.updateEmail("testUsername", "wrongEmailForm");
+        userController.updateEmail("testUsername", "wrongEmailForm");
 
         ///then
         assertEquals("testMail@test.com", userRepository.findByUsername("testUsername").getEmail());
@@ -170,23 +167,23 @@ public class ConsoleControllerTest {
     public void updateUserTelephoneTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///when
-        consoleController.updateTelephoneNumber("testUsername", "987654321");
+        userController.updateTelephoneNumber("testUsername", "987654321");
 
         ///then
         assertEquals(userRepository.findByUsername("testUsername").getTelephoneNumber(), "987654321");
     }
 
     @Test
-    public void updateUserTelephoneWrongFormTest(){
+    public void updateUserTelephoneWrongFormTest() {
         ///given
         UserDto userDto = new UserDto("testUsername", new PasswordHolder("testpas!AA1".toCharArray()), "testMail@test.com", "123456789");
-        consoleController.createNewUser(userDto);
+        userController.createNewUser(userDto);
 
         ///when
-        consoleController.updateTelephoneNumber("testUsername", "wrongTelephoneForm");
+        userController.updateTelephoneNumber("testUsername", "wrongTelephoneForm");
 
         ///then
         assertEquals(userRepository.findByUsername("testUsername").getTelephoneNumber(), "123456789");

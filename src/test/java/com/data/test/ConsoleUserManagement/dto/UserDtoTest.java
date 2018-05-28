@@ -1,7 +1,5 @@
 package com.data.test.ConsoleUserManagement.dto;
 
-import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
-import com.data.test.ConsoleUserManagement.dto.UserDto;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-public class UserDtoTest{
+public class UserDtoTest {
 
     private static Validator validator;
 
@@ -139,7 +137,7 @@ public class UserDtoTest{
     }
 
     @Test
-    public void emailIsNull(){
+    public void emailIsNull() {
         ///given
         Set<ConstraintViolation<UserDto>> constraintViolations;
 
@@ -168,7 +166,7 @@ public class UserDtoTest{
     }
 
     @Test
-    public void telephoneNumberIsNull(){
+    public void telephoneNumberIsNull() {
         ///given
         Set<ConstraintViolation<UserDto>> constraintViolations;
 
