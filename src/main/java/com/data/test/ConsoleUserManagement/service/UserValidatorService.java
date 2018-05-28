@@ -25,7 +25,7 @@ public class UserValidatorService {
     }
 
 
-    public void validateUser(UserDto userDto) throws WrongUserInformationException{
+    public void validateUser(UserDto userDto) throws WrongUserInformationException {
         Set<ConstraintViolation<UserDto>> constraintViolations = validator.validate(userDto);
         if (!constraintViolations.isEmpty()) {
             for (ConstraintViolation constraintViolation : constraintViolations) {
@@ -35,20 +35,20 @@ public class UserValidatorService {
         }
     }
 
-    public void validateNewEmail(String email) throws WrongUserInformationException{
+    public void validateNewEmail(String email) throws WrongUserInformationException {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        if(!matcher.matches()){
+        if (!matcher.matches()) {
             throw new WrongUserInformationException("Wrong form of email provided, try again");
         }
     }
 
-    public void validateNewTelephoneNumber(String telephoneNumber) throws WrongUserInformationException{
+    public void validateNewTelephoneNumber(String telephoneNumber) throws WrongUserInformationException {
         String regex = "[0-9]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(telephoneNumber);
-        if(!matcher.matches()){
+        if (!matcher.matches()) {
             throw new WrongUserInformationException("Wrong form of telephone number provided, try again");
         }
     }
