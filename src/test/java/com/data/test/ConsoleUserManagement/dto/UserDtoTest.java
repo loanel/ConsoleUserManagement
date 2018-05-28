@@ -1,4 +1,4 @@
-package com.data.test.ConsoleUserManagement;
+package com.data.test.ConsoleUserManagement.dto;
 
 import com.data.test.ConsoleUserManagement.dto.PasswordHolder;
 import com.data.test.ConsoleUserManagement.dto.UserDto;

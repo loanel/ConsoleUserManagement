@@ -1,4 +1,4 @@
-package com.data.test.ConsoleUserManagement;
+package com.data.test.ConsoleUserManagement.service;
 
 import com.data.test.ConsoleUserManagement.dto.UserDto;
 import com.data.test.ConsoleUserManagement.service.UserValidatorService;

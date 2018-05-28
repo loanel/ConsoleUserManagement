@@ -1,5 +1,6 @@
-package com.data.test.ConsoleUserManagement;
+package com.data.test.ConsoleUserManagement.repository;
 
+import com.data.test.ConsoleUserManagement.ConsoleUserManagementApplicationTest;
 import com.data.test.ConsoleUserManagement.model.User;
 import com.data.test.ConsoleUserManagement.repository.UserRepository;
 import org.junit.Test;
