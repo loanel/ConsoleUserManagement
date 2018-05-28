@@ -27,15 +27,13 @@ public class ConsoleUserManagementApplication implements CommandLineRunner {
 
     private static final String STOP_APP_SIGN = "3";
     private Map<String, Command> commands;
-    @Autowired
-    private ConsoleInputParser consoleInputParser;
-    @Autowired
-    private UserController userController;
+    private final ConsoleInputParser consoleInputParser;
+    private final UserController userController;
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    @Autowired
+    public ConsoleUserManagementApplication(ConsoleInputParser consoleInputParser, UserController userController) {
+        this.consoleInputParser = consoleInputParser;
+        this.userController = userController;
     }
 
     public static void main(String[] args) {
